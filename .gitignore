@@ -1,7 +1,12 @@
 
+**/*.docx
+
+**/*.xlsx
+
 .idea/
 
 venv/
+
 .venv/
 
 diagrams/
