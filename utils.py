@@ -27,7 +27,6 @@ def get_user_word(target_word:str, valid_words:list) -> str:
             print(err)
             continue
 
-# DEPRECATED
 def count_letters(word:str) -> Dict[str, int]:
     """ Returns a Dictionary of the Letter/Character Counts in the given Word """
     
@@ -64,9 +63,17 @@ def get_score(user_word:str, target_word:str) -> List[str]:
     
     return score_ls
 
+def get_score_edge_cases(user_word:str, target_word:str) -> List[str]:
+    # TODO: Implement Scoring Algorithm that includes edge cases.
+    pass
+
 def did_user_win(score_ls) -> bool:
     """ Returns True of the User Correctly Guessed the Target Word, Otherwise False """
     return all([(True if score=="+" else False) for score in score_ls])
 
 
 __all__ = ["get_word_ls", "get_user_word", "get_score", "did_user_win"]
+
+
+if __name__ == "__main__":
+    pass
