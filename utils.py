@@ -121,6 +121,8 @@ def get_score_edge_cases(user_word:str, target_word:str) -> List[str]:
 
             num_correct_guesses = len(get_plus_idx(user_letter))  # Count how many times we previously guessed the letter
 
+            num_question_marks = len([score for score in score_ls if score == "?"])
+
             # Scoring Criterions
             if user_letter_count == 1 and user_letter_count_target == 1:  # Letter exist but
                 score_ls[i] = "?"
