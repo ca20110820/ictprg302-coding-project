@@ -64,7 +64,7 @@ def get_score(user_word:str, target_word:str) -> List[str]:
     
     return score_ls
 
-def get_score_edge_cases(user_word:str, target_word:str) -> List[str]:
+def get_score_advanced(user_word:str, target_word:str) -> List[str]:
     # TODO: Implement Scoring Algorithm that includes edge cases.
 
     # Standardized to Lower Case
