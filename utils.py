@@ -1,12 +1,12 @@
 from typing import List, Dict
 
-def get_word_ls(path):
+def get_word_ls(path) -> List[str]:
     """ Returns a list of words from a given filepath """
     with open(path, 'r') as file:
         word_ls = [w.strip() for w in file.readlines()]
     return word_ls
 
-def get_user_word(target_word:str, valid_words:list) -> str:
+def get_user_word(target_word:str, valid_words:List[str]) -> str:
     """ Prompts User for Valid Guess Word and Returns that Word """
     
     # Prompt the user for their guess word and check if valid
@@ -15,7 +15,8 @@ def get_user_word(target_word:str, valid_words:list) -> str:
     while True:
         try:
             user_word = input(">> ") # User's Guess
-            user_word = user_word.lower() # Transform/Standardized to Lowercase
+            user_word = user_word.lower() # Standardized to Lowercase
+            user_word = user_word.strip().replace(" ", "")  # Strip the User Guess Word string
             
             conditions = len(user_word) > target_word_len or len(user_word) < target_word_len #or user_word not in valid_words
             

@@ -10,6 +10,7 @@ from utils import (get_word_ls,
 ALL_WORDS = r".\word-bank\all_words.txt"
 TARGET_WORDS = r".\word-bank\target_words.txt"
 
+
 def main():
     global ALL_WORDS
     global TARGET_WORDS
@@ -29,14 +30,14 @@ def main():
     print(welcome_msg)
     print("#"*len(welcome_msg))
     
-    trials = 6 # Max Number of Trials
+    trials = 6  # Max Number of Trials
     
     while True:
         print(f"\nYou have {trials} tries remaining. Good luck!")
         
-        user_word = get_user_word(target_word, valid_words) # Get User Guess Word
+        user_word = get_user_word(target_word, valid_words)  # Get User Guess Word
         
-        scores = get_score(user_word, target_word) # Evaluate User Score
+        scores = get_score(user_word, target_word)  # Evaluate User Score
         
         # Print Results
         print(' '.join([*user_word.upper()]))
@@ -47,7 +48,7 @@ def main():
             print("You Won!")
             break
         
-        trials -= 1 # Update/Decrement Trials
+        trials -= 1  # Update/Decrement Trials
         
         # Check if User Lost
         if trials == 0:
