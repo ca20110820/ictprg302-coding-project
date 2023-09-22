@@ -6,7 +6,7 @@ def get_word_ls(path) -> List[str]:
         word_ls = [w.strip() for w in file.readlines()]
     return word_ls
 
-def get_user_word(target_word:str, valid_words:List[str]) -> str:
+def get_user_word(target_word:str, valid_words:List[str], check_all_words:bool=False) -> str:
     """ Prompts User for Valid Guess Word and Returns that Word """
     
     # Prompt the user for their guess word and check if valid
@@ -18,12 +18,20 @@ def get_user_word(target_word:str, valid_words:List[str]) -> str:
             user_word = user_word.lower() # Standardized to Lowercase
             user_word = user_word.strip().replace(" ", "")  # Strip the User Guess Word string
             
-            conditions = len(user_word) > target_word_len or len(user_word) < target_word_len #or user_word not in valid_words
-            
-            if conditions:
-                print("Invalid Guess! Please try again ...")
+            # conditions = len(user_word) > target_word_len or len(user_word) < target_word_len or user_word not in valid_words
+            if len(user_word) > target_word_len:
+                print(f"The number of letters cannot exceed the number of letters in the target word {target_word_len}! Please try again ...")
                 continue
+            if len(user_word) < target_word_len:
+                print(f"The number of letters cannot be less than the number of letters in the target word {target_word_len}! Please try again ...")
+                continue
+            if check_all_words:
+                if user_word not in valid_words:
+                    print(f"Your word is meaningless! Please try again ...")
+                    continue
+
             return user_word
+
         except Exception as err:
             print(err)
             continue
