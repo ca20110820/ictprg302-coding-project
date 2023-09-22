@@ -66,6 +66,8 @@ def get_score(user_word:str, target_word:str) -> List[str]:
 
 def get_score_advanced(user_word:str, target_word:str) -> List[str]:
     # TODO: Implement Scoring Algorithm that includes edge cases.
+    # TODO: Use a Data Structure to keep track of counts of `+` and `?` for each letter in the user word.
+
 
     # Standardized to Lower Case
     user_word = user_word.lower()
@@ -93,7 +95,7 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
 
     # To Get List of Indexes of Correct Letters Guessed
     # Most of the time, this will either be empty or one element, but there could be repetitions.
-    get_plus_idx = lambda letter: [idx for idx in plus_indexes if user_word[idx] == letter]
+    get_plus_idx = lambda letter: [idx for idx in plus_indexes if user_word[idx] == letter]  # Corresponds to number of "hits"
 
     # Fill up -'s
     for i in range(word_len):
@@ -166,7 +168,7 @@ if __name__ == "__main__":
     test_user = "llrdll"
     test_target = "hellol"
 
-    test_scores = get_score_edge_cases(test_user, test_target)
+    test_scores = get_score_advanced(test_user, test_target)
 
     print(' '.join([*test_user.upper()]), "\tGuess")
     print(' '.join([*test_target.upper()]), "\tTarget")
