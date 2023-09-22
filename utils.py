@@ -86,7 +86,7 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
 
     num_hits:Dict[str,int] = {}  # Number of "hits" or `+`s for a letter
 
-    # Fill up +'s
+    # Fill up `+`s
     for i in range(word_len):
         if user_word[i] == target_word[i]:
             score_ls[i] = "+"
@@ -102,7 +102,7 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
     # Most of the time, this will either be empty or one element, but there could be repetitions.
     get_plus_idx = lambda letter: [idx for idx in plus_indexes if user_word[idx] == letter]  # Corresponds to number of "hits"
 
-    # Fill up -'s
+    # Fill up `-`s
     for i in range(word_len):
         if score_ls[i] is None and user_word[i] not in target_word:  # Only consider None
             score_ls[i] = "-"
@@ -121,7 +121,7 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
         if target_counts.get(l, 0) >= num_hits.get(l, 0):
             num_bullets[l] = target_counts.get(l, 0) - num_hits.get(l, 0)
 
-    # Fill up ?'s
+    # Fill up `?`s
     for i in range(word_len):
         if score_ls[i] is None:
             # Get Letters
