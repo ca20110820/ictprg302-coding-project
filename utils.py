@@ -14,7 +14,7 @@ def get_user_word(target_word:str, valid_words:List[str], check_all_words:bool=F
     print(f"What is your {target_word_len}-letter guess? (Cheat: {target_word})")
     while True:
         try:
-            user_word = input(">> ") # User's Guess
+            user_word = input(">>> ") # User's Guess
             user_word = user_word.lower() # Standardized to Lowercase
             user_word = user_word.strip().replace(" ", "")  # Strip the User Guess Word string
             

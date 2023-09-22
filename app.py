@@ -31,11 +31,28 @@ def main():
     print("#"*len(welcome_msg))
     
     trials = 6  # Max Number of Trials
-    
+
+    while True:
+        try:
+            check_all_words = input(f"Do you want to check if your guess word exist and valid? (yes/no) >>> ")
+            check_all_words = check_all_words.replace(" ", "")
+            if check_all_words == "yes":
+                check_all_words = True
+                break
+            elif check_all_words == "no":
+                check_all_words = False
+                break
+            else:
+                print(f"Could not parse your input. Please try again ...\n")
+                continue
+        except Exception as err:
+            print(err)
+            continue
+
     while True:
         print(f"\nYou have {trials} tries remaining. Good luck!")
         
-        user_word = get_user_word(target_word, valid_words)  # Get User Guess Word
+        user_word = get_user_word(target_word, valid_words, check_all_words=check_all_words)  # Get User Guess Word
         
         scores = get_score(user_word, target_word)  # Evaluate User Score
         
