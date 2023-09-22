@@ -41,11 +41,11 @@ def count_letters(word:str) -> Dict[str, int]:
     
     out_dict = {}
     
-    for c in word:
-        if c not in out_dict.keys():
-            out_dict[c] = 1
+    for l in word:
+        if l not in out_dict.keys():
+            out_dict[l] = 1
         else:
-            out_dict[c] += 1
+            out_dict[l] += 1
             
     return out_dict
 
@@ -54,9 +54,8 @@ def num_letter_in_word(letter:str, word:str) -> int:
     assert len(letter) == 1, "letter must be a string with length 1"
     return count_letters(word).get(letter, 0)
 
-def num_hits(letter:str, guess:str, target:str) -> int:
+def num_hits(guess:str, target:str) -> int:
     """ Returns the Number of Hits """
-    assert len(letter) == 1, "letter must be a string with length 1"
     assert len(guess) == len(target), "Length of Target and Guess Strings must be Equal"
     return len([tup for tup in zip(guess, target) if tup[0] == tup[1]])
 
@@ -67,9 +66,9 @@ def num_bullets(letter:str, guess:str, target:str) -> int:
     n_letter_target = num_letter_in_word(letter, target)
 
     if n_letter_target >= n_letter_guess:
-        return None
+        return 0
     else:
-        return n_letter_target - num_hits(letter, guess, target)
+        return n_letter_target - num_hits(guess, target)
 
 def get_score(user_word:str, target_word:str) -> List[str]:
     """ Returns the List of Scores """
@@ -102,15 +101,11 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
 
     word_len = len(target_word)  # Length of Target/User Word. Don't want to recalculate.
 
-    # Check if there are repetitions in letters
-    is_repeated_user_letter = any([count > 1 for _, count in count_letters(user_word).items()])
-    is_repeated_target_letter = any([count > 1 for _, count in count_letters(target_word).items()])
+    score_ls = [None] * word_len  # Initialize Scores
 
-    score_ls = [None]*word_len  # Initialize Scores
-
-    # Use get_score if there are not repeated letters in either user or target words
-    if not (is_repeated_user_letter or is_repeated_target_letter):
-        return get_score(user_word, target_word)
+    # if all([num_letter_in_word(l, target_word)>=num_letter_in_word(l, user_word) for l in user_word if l in target_word]):
+    #     print(f"Simple Scoring is same as Advanced Scoring |\tGuess: {user_word}\tTarget: {target_word}")
+    #     return get_score(user_word, target_word)
 
     # Fill up `+`s
     for i in range(word_len):
@@ -128,9 +123,7 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
     # Create a (Initial) Dictionary for the Number of "Bullets", which may updated for each iteration
     num_bullets_dict = {}
     for l in user_word:
-        if num_letter_in_word(l, target_word) >= num_hits(l, user_word, target_word):
-            # num_bullets[l] = target_counts.get(l, 0) - num_hits.get(l, 0)
-            num_bullets_dict[l] = num_bullets(l, user_word, target_word)
+        num_bullets_dict[l] = num_bullets(l, user_word, target_word)
 
     # Fill up `?`s
     for i in range(word_len):
@@ -159,9 +152,8 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
                 if user_letter_count > user_letter_count_target:  # The "Cheating" Scenario
                     # Check how many bullets left
                     if num_bullets_dict[user_letter] > 0:  # There's still some "bullets"
-                        # Update the number of bullets for the letter
                         score_ls[i] = "?"
-                        num_bullets_dict[user_letter] -= 1  # Update the number of bullets for the letter
+                        num_bullets_dict[user_letter] -= 1  # Update the number of bullets for the letter by decrementing
                     else:
                         score_ls[i] = "-"
                 else:
