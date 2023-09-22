@@ -158,16 +158,8 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
                         num_bullets[user_letter] -= 1  # Update the number of bullets for the letter
                     else:
                         score_ls[i] = "-"
-                elif user_letter_count < user_letter_count_target:
+                else:
                     score_ls[i] = "?"
-                else:  # Both Equal and More than one repetition of the letter
-                    # Check how many bullets left
-                    if num_bullets[user_letter] > 0:  # There's still some "bullets"
-                        # Update the number of bullets for the letter
-                        score_ls[i] = "?"
-                        num_bullets[user_letter] -= 1  # Update the number of bullets for the letter
-                    else:
-                        score_ls[i] = "-"
 
     return score_ls
 
