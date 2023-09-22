@@ -176,7 +176,7 @@ def did_user_win(score_ls) -> bool:
     return all([(True if score=="+" else False) for score in score_ls])
 
 
-__all__ = ["get_word_ls", "get_user_word", "get_score", "did_user_win"]
+__all__ = ["get_word_ls", "get_user_word", "get_score", "get_score_advanced", "did_user_win"]
 
 
 if __name__ == "__main__":
