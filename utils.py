@@ -49,6 +49,28 @@ def count_letters(word:str) -> Dict[str, int]:
             
     return out_dict
 
+def num_letter_in_word(letter:str, word:str) -> int:
+    """ Returns the number of occurences of a letter in a given word """
+    assert len(letter) == 1, "letter must be a string with length 1"
+    return count_letters(word).get(letter, 0)
+
+def num_hits(letter:str, guess:str, target:str) -> int:
+    """ Returns the Number of Hits """
+    assert len(letter) == 1, "letter must be a string with length 1"
+    assert len(guess) == len(target), "Length of Target and Guess Strings must be Equal"
+    return len([tup for tup in zip(guess, target) if tup[0] == tup[1]])
+
+def num_bullets(letter:str, guess:str, target:str) -> int:
+    """ Returns the (initial static) number of Bullets """
+
+    n_letter_guess = num_letter_in_word(letter, guess)
+    n_letter_target = num_letter_in_word(letter, target)
+
+    if n_letter_target >= n_letter_guess:
+        return None
+    else:
+        return n_letter_target - num_hits(letter, guess, target)
+
 def get_score(user_word:str, target_word:str) -> List[str]:
     """ Returns the List of Scores """
     
@@ -90,25 +112,10 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
     if not (is_repeated_user_letter or is_repeated_target_letter):
         return get_score(user_word, target_word)
 
-    plus_indexes = []  # List to keep track of indexes with +'s
-
-    num_hits:Dict[str,int] = {}  # Number of "hits" or `+`s for a letter
-
     # Fill up `+`s
     for i in range(word_len):
         if user_word[i] == target_word[i]:
             score_ls[i] = "+"
-
-            if user_word[i] in num_hits.keys():  # If letter already exists in num_hits dictionary
-                num_hits[user_word[i]] += 1
-            else:  # If letter does not exist in num_hits dictionary
-                num_hits[user_word[i]] = 1
-
-            plus_indexes.append(i)
-
-    # To Get List of Indexes of Correct Letters Guessed
-    # Most of the time, this will either be empty or one element, but there could be repetitions.
-    get_plus_idx = lambda letter: [idx for idx in plus_indexes if user_word[idx] == letter]  # Corresponds to number of "hits"
 
     # Fill up `-`s
     for i in range(word_len):
@@ -118,16 +125,12 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
     if all([(score is not None) for score in score_ls]):  # Return if all are filled
         return score_ls
 
-    # Create a Dictionary for the Count of each letter in a Word (User and Target Words)
-    user_counts: Dict[str, int] = count_letters(user_word)
-    target_counts: Dict[str, int] = count_letters(target_word)
-
     # Create a (Initial) Dictionary for the Number of "Bullets", which may updated for each iteration
-    # num_bullets = {l:target_counts.get(l, 0) - num_hits.get(l,0) for l in user_word}
-    num_bullets = {}
+    num_bullets_dict = {}
     for l in user_word:
-        if target_counts.get(l, 0) >= num_hits.get(l, 0):
-            num_bullets[l] = target_counts.get(l, 0) - num_hits.get(l, 0)
+        if num_letter_in_word(l, target_word) >= num_hits(l, user_word, target_word):
+            # num_bullets[l] = target_counts.get(l, 0) - num_hits.get(l, 0)
+            num_bullets_dict[l] = num_bullets(l, user_word, target_word)
 
     # Fill up `?`s
     for i in range(word_len):
@@ -140,15 +143,10 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
             assert target_letter != user_letter, "Both Target and User Letters are Equal!!!"
 
             # Get Counts
-            # target_letter_count = target_counts[target_letter]
-            user_letter_count = user_counts[user_letter]
-            # user_letter_count_target = target_counts[user_letter]  # Count of User Guess Letter in Target Word.
-            user_letter_count_target = target_counts.get(user_letter, 0)  # Count of User Guess Letter in Target Word.
+            user_letter_count = num_letter_in_word(user_letter, user_word)
+            user_letter_count_target = num_letter_in_word(user_letter, target_word)  # Count of User Guess Letter in Target Word.
 
             assert user_letter_count_target > 0, "User letter does not exist in Target Word!!!"
-
-            # num_correct_guesses = len(get_plus_idx(user_letter))  # Count how many times we previously guessed the letter, i.e. Number of "hits" for a letter
-            # num_question_marks = len([score for score in score_ls if score == "?"])  # `?` in total, not for a specific letter
 
             # Scoring Criterions
             if user_letter_count == 1 and user_letter_count_target == 1:  # Letter exist but in wrong index
@@ -160,10 +158,10 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
             else:   # user_letter_count > 1 and user_letter_count_target > 1
                 if user_letter_count > user_letter_count_target:  # The "Cheating" Scenario
                     # Check how many bullets left
-                    if num_bullets[user_letter] > 0:  # There's still some "bullets"
+                    if num_bullets_dict[user_letter] > 0:  # There's still some "bullets"
                         # Update the number of bullets for the letter
                         score_ls[i] = "?"
-                        num_bullets[user_letter] -= 1  # Update the number of bullets for the letter
+                        num_bullets_dict[user_letter] -= 1  # Update the number of bullets for the letter
                     else:
                         score_ls[i] = "-"
                 else:
@@ -188,3 +186,6 @@ if __name__ == "__main__":
     print(' '.join([*test_user.upper()]), "\tGuess")
     print(' '.join([*test_target.upper()]), "\tTarget")
     print(' '.join(test_scores))
+
+    print(num_hits("a", "aaade", "aacyh"))
+    print(num_letter_in_word("e", "eeesdfsdf"))
