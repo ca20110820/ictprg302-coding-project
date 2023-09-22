@@ -20,10 +20,10 @@ def get_user_word(target_word:str, valid_words:List[str], check_all_words:bool=F
             
             # conditions = len(user_word) > target_word_len or len(user_word) < target_word_len or user_word not in valid_words
             if len(user_word) > target_word_len:
-                print(f"The number of letters cannot exceed the number of letters in the target word {target_word_len}! Please try again ...")
+                print(f"The number of letters cannot exceed the number of letters in the target word ({target_word_len} letters)! Please try again ...")
                 continue
             if len(user_word) < target_word_len:
-                print(f"The number of letters cannot be less than the number of letters in the target word {target_word_len}! Please try again ...")
+                print(f"The number of letters cannot be less than the number of letters in the target word ({target_word_len} letters)! Please try again ...")
                 continue
             if check_all_words:
                 if user_word not in valid_words:
