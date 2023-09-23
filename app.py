@@ -1,7 +1,8 @@
 import random
 
 from utils import (get_word_ls, 
-                   get_score, 
+                   get_score,
+                   get_score_advanced,
                    did_user_win, 
                    get_user_word
                    )
@@ -32,6 +33,7 @@ def main():
     
     trials = 6  # Max Number of Trials
 
+    # Prompt user if they want to check if their guess word is valid (i.e. word is in ALL_WORDS)
     while True:
         try:
             check_all_words = input(f"Do you want to check if your guess word exist and valid? (yes/no) >>> ")
@@ -49,12 +51,33 @@ def main():
             print(err)
             continue
 
+    # Prompt user if they want to use the advanced scoring algorithm
+    while True:
+        try:
+            use_adv_scoring = input("Do you want to use the advanced scoring algorithm? (yes/no) >>> ")
+            use_adv_scoring = use_adv_scoring.replace(" ", "")
+            if use_adv_scoring == "yes":
+                use_adv_scoring = True
+                break
+            elif use_adv_scoring == "no":
+                use_adv_scoring = False
+                break
+            else:
+                print(f"Could not parse your input. Please try again ...\n")
+                continue
+        except Exception as err:
+            print(err)
+            continue
+
     while True:
         print(f"\nYou have {trials} tries remaining. Good luck!")
         
         user_word = get_user_word(target_word, valid_words, check_all_words=check_all_words)  # Get User Guess Word
-        
-        scores = get_score(user_word, target_word)  # Evaluate User Score
+
+        if use_adv_scoring:
+            scores = get_score_advanced(user_word, target_word)
+        else:
+            scores = get_score(user_word, target_word)  # Evaluate User Score
         
         # Print Results
         print(' '.join([*user_word.upper()]))
