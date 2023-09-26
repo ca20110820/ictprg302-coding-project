@@ -70,6 +70,18 @@ def num_bullets(letter:str, guess:str, target:str) -> int:
     else:
         return n_letter_target - num_hits(guess, target)
 
+def is_cheat_at_letter(user_word:str, target_word:str, letter:str) -> bool:
+    guess = user_word.lower().strip()
+    target = target_word.lower().strip()
+    l = letter.lower().strip()
+
+    assert len(guess) == len(target), "The length of the User and Target Words must be equal"
+    assert len(l) == 1
+
+    if num_letter_in_word(l, guess) > num_letter_in_word(l, target) and (l in guess) and (l in target):
+        return True
+    return False
+
 def get_score(user_word:str, target_word:str) -> List[str]:
     """ Returns the List of Scores """
     
@@ -166,7 +178,7 @@ def did_user_win(score_ls) -> bool:
     return all([(True if score=="+" else False) for score in score_ls])
 
 
-__all__ = ["get_word_ls", "get_user_word", "get_score", "get_score_advanced", "did_user_win"]
+__all__ = ["get_word_ls", "get_user_word", "get_score", "get_score_advanced", "did_user_win", "is_cheat_at_letter"]
 
 
 if __name__ == "__main__":
