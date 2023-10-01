@@ -157,7 +157,12 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
             if user_letter_count == 1 and user_letter_count_target == 1:  # Letter exist but in wrong index
                 score_ls[i] = "?"
             elif user_letter_count > 1 and user_letter_count_target == 1:  # The "Cheating" Scenario
-                score_ls[i] = "-"
+                # Check how many bullets left
+                if num_bullets_dict[user_letter] > 0:  # There's still some "bullets"
+                    score_ls[i] = "?"
+                    num_bullets_dict[user_letter] -= 1  # Update the number of bullets for the letter by decrementing
+                else:
+                    score_ls[i] = "-"
             elif user_letter_count == 1 and user_letter_count_target > 1:
                 score_ls[i] = "?"
             else:   # user_letter_count > 1 and user_letter_count_target > 1
@@ -169,7 +174,7 @@ def get_score_advanced(user_word:str, target_word:str) -> List[str]:
                     else:
                         score_ls[i] = "-"
                 else:
-                    score_ls[i] = "?"
+                    score_ls[i] = "?"  # There's a Theorem for this, but is left as an excercise for the reader ;)
 
     return score_ls
 

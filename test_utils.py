@@ -11,8 +11,16 @@ class TestMainClass(unittest.TestCase):
     # get_score(user_word:str, target_word:str) Signature for get_score
 
     def test_simple_scoring(self):
-        _test_cases = [("LELIYL", "DFLSLD"), ("DFLSLD", "LELIYL")]
-        _results = [["?", "-", "+", "-", "-", "?"], ["-", "-", "+", "-", "?", "-"]]
+        _test_cases = [("LELIYL", "DFLSLD"),
+                       ("DFLSLD", "LELIYL"),
+                       ("ECCCC", "CRANK"),
+                       ("CCCCC", "CRANK"),
+                       ]
+        _results = [["?", "-", "+", "-", "-", "?"],
+                    ["-", "-", "+", "-", "?", "-"],
+                    ["-", "?", "?", "?", "?"],
+                    ["+", "?", "?", "?", "?"]
+                    ]
 
         for t_case, res in zip(_test_cases, _results):
             self.assertEqual(get_score(*t_case), res)
@@ -26,6 +34,8 @@ class TestMainClass(unittest.TestCase):
                        ("LLLLUL", "LELILL"),
                        ("TGULLL", "LLLRFO"),
                        ("TGLULL", "LLLRFO"),
+                       ("ECCCC", "CRANK"),
+                       ("CCCCC", "CRANK"),
                        ]
 
         _results = [["-", "-", "+", "-", "?", "-"],
@@ -35,6 +45,8 @@ class TestMainClass(unittest.TestCase):
                     ["+", "?", "+", "-", "-", "+"],
                     ["-", "-", "-", "?", "?", "?"],
                     ["-", "-", "+", "-", "?", "?"],
+                    ["-", "?", "-", "-", "-"],
+                    ["+", "-", "-", "-", "-"],
                     ]
 
         for t_case, res in zip(_test_cases, _results):
@@ -64,6 +76,8 @@ class TestCheat(unittest.TestCase):
         self.assertEqual(get_score("dfaaf", "aaade"), get_score_advanced("dfaaf", "aaade"))
         self.assertEqual(get_score("asdad", "aaaaa"), get_score_advanced("asdad", "aaaaa"))
         self.assertEqual(get_score("aaabbb", "aaabbb"), get_score_advanced("aaabbb", "aaabbb"))
+
+        self.assertEqual(get_score("CRANK", "ECCCC"), get_score_advanced("CRANK", "ECCCC"))
 
         self.assertNotEqual(get_score("aaade", "dfaaf"), get_score_advanced("aaade", "dfaaf"))
         self.assertNotEqual(get_score("aaaaa", "asdad"), get_score_advanced("aaaaa", "asdad"))
