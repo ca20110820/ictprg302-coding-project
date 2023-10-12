@@ -85,14 +85,14 @@ def main():
         
         # Check if User Won
         if did_user_win(scores):
-            print("You Won!")
+            print("\nYou Won!")
             break
         
         trials -= 1  # Update/Decrement Trials
         
         # Check if User Lost
         if trials == 0:
-            print(f"You Lost!\nThe Correct word is: {target_word}")
+            print(f"\nYou Lost!\nThe Correct word is: {target_word}")
             break
 
 

@@ -15,6 +15,12 @@ def get_user_word(target_word:str, valid_words:List[str], check_all_words:bool=F
     while True:
         try:
             user_word = input(">>> ") # User's Guess
+
+            # list comprehension that filters out bad characters
+            # https://nadeauinnovations.com/post/2020/11/python-tricks-replace-all-non-alphanumeric-characters-in-a-string/
+            user_word = [s for s in user_word if s.isalpha()]
+            user_word = "".join(user_word)
+
             user_word = user_word.lower() # Standardized to Lowercase
             user_word = user_word.strip().replace(" ", "")  # Strip the User Guess Word string
             
