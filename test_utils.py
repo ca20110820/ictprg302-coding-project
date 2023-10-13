@@ -1,6 +1,6 @@
 import unittest
 
-from utils import (get_word_ls,
+from utils import (get_word_list,
                    get_score,
                    get_score_advanced,
                    is_cheat_at_letter
@@ -58,8 +58,8 @@ class TestCheat(unittest.TestCase):
         all_words_path = r".\word-bank\all_words.txt"
         target_words_path = r".\word-bank\target_words.txt"
 
-        self.all_words = get_word_ls(all_words_path)
-        self.target_words = get_word_ls(target_words_path)
+        self.all_words = get_word_list(all_words_path)
+        self.target_words = get_word_list(target_words_path)
 
     def test_cheat(self):
         self.assertTrue(is_cheat_at_letter("aaade", "dfaaf", "a"))

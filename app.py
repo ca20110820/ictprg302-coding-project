@@ -1,9 +1,9 @@
 import random
 
-from utils import (get_word_ls, 
+from utils import (get_word_list,
                    get_score,
                    get_score_advanced,
-                   did_user_win, 
+                   did_user_win,
                    get_user_word
                    )
 
@@ -13,25 +13,20 @@ TARGET_WORDS = r".\word-bank\target_words.txt"
 
 
 def main():
-    global ALL_WORDS
-    global TARGET_WORDS
     
-    target_words = get_word_ls(TARGET_WORDS)
-    valid_words = get_word_ls(ALL_WORDS)
+    target_words = get_word_list(TARGET_WORDS)
+    valid_words = get_word_list(ALL_WORDS)
     
     # Generate Random Target Word and Transform/Standardize to Lower Case
-    target_word = random.choice(target_words).lower() 
-    
-    # Target Word Properties
-    # target_word_len = len(target_word)
+    target_word = random.choice(target_words).lower()
     
     # Welcome Message
     welcome_msg = "=======   Welcome to Wordle Console App!!!   ======="
-    print("#"*len(welcome_msg))
+    print("#" * len(welcome_msg))
     print(welcome_msg)
-    print("#"*len(welcome_msg))
+    print("#" * len(welcome_msg))
     
-    trials = 6  # Max Number of Trials
+    attempts = 6  # Max Number of Trials
 
     # Prompt user if they want to check if their guess word is valid (i.e. word is in ALL_WORDS)
     while True:
@@ -47,6 +42,7 @@ def main():
             else:
                 print(f"Could not parse your input. Please try again ...\n")
                 continue
+
         except Exception as err:
             print(err)
             continue
@@ -70,14 +66,14 @@ def main():
             continue
 
     while True:
-        print(f"\nYou have {trials} tries remaining. Good luck!")
+        print(f"\nYou have {attempts} tries remaining. Good luck!")
         
-        user_word = get_user_word(target_word, valid_words, check_all_words=check_all_words)  # Get User Guess Word
+        user_word = get_user_word(target_word, valid_words, check_all_words=check_all_words)
 
         if use_adv_scoring:
             scores = get_score_advanced(user_word, target_word)
         else:
-            scores = get_score(user_word, target_word)  # Evaluate User Score
+            scores = get_score(user_word, target_word)
         
         # Print Results
         print(' '.join([*user_word.upper()]))
@@ -88,10 +84,10 @@ def main():
             print("\nYou Won!")
             break
         
-        trials -= 1  # Update/Decrement Trials
+        attempts -= 1
         
         # Check if User Lost
-        if trials == 0:
+        if attempts == 0:
             print(f"\nYou Lost!\nThe Correct word is: {target_word}")
             break
 
