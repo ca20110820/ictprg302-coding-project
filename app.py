@@ -66,7 +66,7 @@ def main():
             continue
 
     while True:
-        print(f"\nYou have {attempts} tries remaining. Good luck!")
+        print(f"\n\nYou have {attempts} attempts remaining. Good luck!")
         
         user_word = get_user_word(target_word, valid_words, check_all_words=check_all_words)
 
@@ -76,8 +76,9 @@ def main():
             scores = get_score(user_word, target_word)
         
         # Print Results
-        print(' '.join([*user_word.upper()]))
-        print(' '.join(scores))
+        print()
+        print('Guess:\t' + ' '.join([*user_word.upper()]))
+        print('Score:\t' + ' '.join(scores))
         
         # Check if User Won
         if did_user_win(scores):
