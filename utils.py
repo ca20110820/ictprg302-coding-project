@@ -49,6 +49,25 @@ def get_user_word(target_word: str, valid_words: List[str], check_all_words: boo
             continue
 
 
+def get_user_bool(true_value: str, false_value: str, message: str) -> bool:
+    """Returns True or False corresponding to User's Input"""
+    assert true_value != false_value, "True Value cannot be the same as False Value!"
+
+    while True:
+        try:
+            user_input = input(f"{message} >>> ")
+            user_input = user_input.replace(" ", "")
+            if user_input in [true_value, false_value]:
+                return user_input == true_value
+            else:
+                print(f"Your input is invalid. Please select from ['{true_value}', '{false_value}'].\n")
+                continue
+
+        except Exception as e:
+            print(e)
+            continue
+
+
 def count_letters(word: str) -> Dict[str, int]:
     """ Returns a Dictionary of the Letter/Character Counts in the given Word """
     
@@ -203,4 +222,11 @@ def did_user_win(score_ls) -> bool:
     return all([(True if score == "+" else False) for score in score_ls])
 
 
-__all__ = ["get_word_list", "get_user_word", "get_score", "get_score_advanced", "did_user_win", "is_cheat_at_letter"]
+__all__ = ["get_word_list",
+           "get_user_word",
+           "get_user_bool",
+           "get_score",
+           "get_score_advanced",
+           "did_user_win",
+           "is_cheat_at_letter"
+           ]

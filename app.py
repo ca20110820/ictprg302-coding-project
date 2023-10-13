@@ -1,6 +1,7 @@
 import random
 
 from utils import (get_word_list,
+                   get_user_bool,
                    get_score,
                    get_score_advanced,
                    did_user_win,
@@ -29,41 +30,10 @@ def main():
     attempts = 6  # Max Number of Trials
 
     # Prompt user if they want to check if their guess word is valid (i.e. word is in ALL_WORDS)
-    while True:
-        try:
-            check_all_words = input(f"Do you want to check if your guess word exist and valid? (yes/no) >>> ")
-            check_all_words = check_all_words.replace(" ", "")
-            if check_all_words == "yes":
-                check_all_words = True
-                break
-            elif check_all_words == "no":
-                check_all_words = False
-                break
-            else:
-                print(f"Could not parse your input. Please try again ...\n")
-                continue
-
-        except Exception as err:
-            print(err)
-            continue
+    check_all_words = get_user_bool("yes", "no", "Do you want to check if your guess word exist and valid? (yes/no)")
 
     # Prompt user if they want to use the advanced scoring algorithm
-    while True:
-        try:
-            use_adv_scoring = input("Do you want to use the advanced scoring algorithm? (yes/no) >>> ")
-            use_adv_scoring = use_adv_scoring.replace(" ", "")
-            if use_adv_scoring == "yes":
-                use_adv_scoring = True
-                break
-            elif use_adv_scoring == "no":
-                use_adv_scoring = False
-                break
-            else:
-                print(f"Could not parse your input. Please try again ...\n")
-                continue
-        except Exception as err:
-            print(err)
-            continue
+    use_adv_scoring = get_user_bool("yes", "no", "Do you want to use the advanced scoring algorithm? (yes/no)")
 
     while True:
         print(f"\n\nYou have {attempts} attempts remaining. Good luck!")
