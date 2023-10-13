@@ -19,24 +19,26 @@ def get_user_word(target_word: str, valid_words: List[str], check_all_words: boo
         try:
             user_word = input(">>> ")  # User's Guess
 
-            # list comprehension that filters out bad characters
             # https://nadeauinnovations.com/post/2020/11/python-tricks-replace-all-non-alphanumeric-characters-in-a-string/
-            user_word = [s for s in user_word if s.isalpha()]
-            user_word = "".join(user_word)
+            is_all_alpha = all([character.isalpha() for character in user_word])
 
             user_word = user_word.lower()  # Standardized to Lowercase
             user_word = user_word.strip().replace(" ", "")  # Strip the User Guess Word string
 
-            # conditions = len(user_word) > target_word_len or len(user_word) < target_word_len or user_word
-            # not in valid_words
+            if not is_all_alpha:
+                print("The guess word cannot have any numeric characters! Please try again...")
+                continue
+
             if len(user_word) > target_word_len:
                 print(f"The number of letters cannot exceed the number of letters in the target word "
                       f"({target_word_len} letters)! Please try again ...")
                 continue
+
             if len(user_word) < target_word_len:
                 print(f"The number of letters cannot be less than the number of letters in the target word "
                       f"({target_word_len} letters)! Please try again ...")
                 continue
+
             if check_all_words:
                 if user_word not in valid_words:
                     print(f"Your word is meaningless! Please try again ...")
