@@ -1,13 +1,6 @@
 import random
 
-from utils import (get_word_list,
-                   get_user_bool,
-                   get_score,
-                   get_score_advanced,
-                   did_user_win,
-                   get_user_word,
-                   get_difficulty_level
-                   )
+from utils import *
 
 # File Paths for the words
 ALL_WORDS = "./word-bank/all_words.txt"
@@ -27,7 +20,9 @@ def main():
     print("#" * len(welcome_msg))
     print(welcome_msg)
     print("#" * len(welcome_msg))
-    
+
+    user_name = get_user_name()
+
     attempts = get_difficulty_level()  # Max Number of Attempts
 
     # Prompt user if they want to check if their guess word is valid (i.e. word is in ALL_WORDS)

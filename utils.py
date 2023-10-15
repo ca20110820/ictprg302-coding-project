@@ -9,6 +9,19 @@ def get_word_list(path) -> List[str]:
     return word_ls
 
 
+def get_user_name() -> str:
+    """Returns the Name of the User"""
+
+    while True:
+        user_name = input("Enter your name >>> ")
+
+        if not user_name.isalpha() or len(user_name.strip()) == 0:
+            print("Invalid Name! Please try again ...\n")
+            continue
+        else:
+            return user_name.strip()
+
+
 def get_user_word(target_word: str, valid_words: List[str], check_all_words: bool = False) -> str:
     """ Prompts User for Valid Guess Word and Returns that Word """
     # Prompt the user for their guess word and check if valid
@@ -314,7 +327,8 @@ __all__ = ["get_word_list",
            "get_score_advanced",
            "did_user_win",
            "is_cheat_at_letter",
-           "get_difficulty_level"
+           "get_difficulty_level",
+           "get_user_name"
            ]
 
 if __name__ == "__main__":
