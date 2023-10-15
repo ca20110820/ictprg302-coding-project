@@ -37,7 +37,7 @@ class DataProcessor:
 
     def get_user_avg_attempts(self, user_name: str) -> float | None:
         game_num_attempts = [ls[3] for ls in self.data if ls[0] == user_name]
-        return sum(game_num_attempts)/len(game_num_attempts) if len(game_num_attempts) != 0 else None
+        return round(sum(game_num_attempts)/len(game_num_attempts), 2) if len(game_num_attempts) != 0 else None
 
     def get_users_avg_attempts(self) -> Dict[str, float]:
 

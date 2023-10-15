@@ -60,7 +60,7 @@ def main():
         # Check if User Won
         if did_user_win(scores):
             game_result = "Won"
-            print("\nYou Won!")
+            print(f"\nYou Won {user_name}!")
             break
         
         # Check if User Lost
@@ -72,7 +72,8 @@ def main():
     data_processor.write_data(user_name, target_word, difficulty_level, initial_attempts - attempts, game_result)
     data_processor.read_data()
     print(f"\nYour Average Attempts is {data_processor.get_user_avg_attempts(user_name)}")
-    print(f"\n\nTop Scorers:")
+    print(f"\n\nTop Users:")
+    print("-" * len("Top Users:"))
     for user, avg_attempt in data_processor.get_users_avg_attempts().items():
         print(user + ":", avg_attempt)
 
