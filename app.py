@@ -72,6 +72,9 @@ def main():
     data_processor.write_data(user_name, target_word, difficulty_level, initial_attempts - attempts, game_result)
     data_processor.read_data()
     print(f"\nYour Average Attempts is {data_processor.get_user_avg_attempts(user_name)}")
+    print(f"\n\nTop Scorers:")
+    for user, avg_attempt in data_processor.get_users_avg_attempts().items():
+        print(user + ":", avg_attempt)
 
 
 if __name__ == "__main__":

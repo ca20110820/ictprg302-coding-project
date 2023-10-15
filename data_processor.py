@@ -1,4 +1,5 @@
-from typing import List
+from typing import List, Dict, Tuple
+import random
 
 
 class DataProcessor:
@@ -34,18 +35,31 @@ class DataProcessor:
         users = set([ls[0] for ls in self.data])
         return sorted(list(users))
 
-    def get_user_avg_attempts(self, user_name: str) -> int | None:
+    def get_user_avg_attempts(self, user_name: str) -> float | None:
         game_num_attempts = [ls[3] for ls in self.data if ls[0] == user_name]
         return sum(game_num_attempts)/len(game_num_attempts) if len(game_num_attempts) != 0 else None
+
+    def get_users_avg_attempts(self) -> Dict[str, float]:
+
+        out_dict = {}
+
+        for user in self.get_users():
+            out_dict[user] = self.get_user_avg_attempts(user)
+
+        return dict(sorted(out_dict.items(), key=lambda item: item[1]))
 
 
 if __name__ == "__main__":
     dp = DataProcessor()
-    dp.write_data("Cedric", "aaaaa", "Easy", 4, "Won")
+    dp.write_data("Cedric", "aaaaa", "Easy", random.randint(1, 10), "Won")
     dp.write_data("Cedric", "bbbbb", "Easy", 10, "Loss")
-    dp.write_data("Anna", "asdde", "Normal", 6, "Loss")
-    dp.write_data("Zella", "dsedf", "Normal", 3, "Won")
+    dp.write_data("Anna", "asdde", "Normal", random.randint(1, 10), "Loss")
+    dp.write_data("Zella", "dsedf", "Normal", random.randint(1, 10), "Won")
 
     dp.read_data()
     print(dp.data)
     print(dp.get_users())
+    print()
+    print(dp.get_users_avg_attempts())
+    for k, v in dp.get_users_avg_attempts().items():
+        print(k, v)
