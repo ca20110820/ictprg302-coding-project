@@ -5,7 +5,8 @@ from utils import (get_word_list,
                    get_score,
                    get_score_advanced,
                    did_user_win,
-                   get_user_word
+                   get_user_word,
+                   get_difficulty_level
                    )
 
 # File Paths for the words
@@ -27,7 +28,7 @@ def main():
     print(welcome_msg)
     print("#" * len(welcome_msg))
     
-    attempts = 6  # Max Number of Trials
+    attempts = get_difficulty_level()  # Max Number of Attempts
 
     # Prompt user if they want to check if their guess word is valid (i.e. word is in ALL_WORDS)
     check_all_words = get_user_bool("yes", "no", "Do you want to check if your guess word exist and valid? (yes/no)")

@@ -248,5 +248,6 @@ __all__ = ["get_word_list",
            "get_score",
            "get_score_advanced",
            "did_user_win",
-           "is_cheat_at_letter"
+           "is_cheat_at_letter",
+           "get_difficulty_level"
            ]
