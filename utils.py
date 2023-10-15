@@ -70,6 +70,24 @@ def get_user_bool(true_value: str, false_value: str, message: str) -> bool:
             continue
 
 
+def get_difficulty_level() -> int:
+    """Returns the number of attempts based from the chosen difficulty level"""
+
+    while True:
+        difficulty_level = input("Select Difficulty Level (easy/normal/hard) >>> ")
+        if difficulty_level in ['easy', 'normal', 'hard']:
+            match difficulty_level:
+                case 'easy':
+                    return 10
+                case 'normal':
+                    return 6
+                case 'hard':
+                    return 4
+        else:
+            print("Invalid Difficulty! Please try again ...\n")
+            continue
+
+
 def count_letters(word: str) -> Dict[str, int]:
     """ Returns a Dictionary of the Letter/Character Counts in the given Word """
     
