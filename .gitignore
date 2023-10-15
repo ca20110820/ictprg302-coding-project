@@ -5,3 +5,5 @@ venv/
 .venv/
 
 __pycache__/
+
+game_data.txt
