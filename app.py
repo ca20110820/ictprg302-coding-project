@@ -1,6 +1,7 @@
 import random
 
 from utils import *
+from data_processor import DataProcessor
 
 # File Paths for the words
 ALL_WORDS = "./word-bank/all_words.txt"
@@ -24,12 +25,23 @@ def main():
     user_name = get_user_name()
 
     attempts = get_difficulty_level()  # Max Number of Attempts
+    initial_attempts = attempts
+
+    match attempts:
+        case 10:
+            difficulty_level = "Easy"
+        case 6:
+            difficulty_level = "Normal"
+        case 4:
+            difficulty_level = "Hard"
 
     # Prompt user if they want to check if their guess word is valid (i.e. word is in ALL_WORDS)
     check_all_words = get_user_bool("yes", "no", "Do you want to check if your guess word exist and valid? (yes/no)")
 
     # Prompt user if they want to use the advanced scoring algorithm
     use_adv_scoring = get_user_bool("yes", "no", "Do you want to use the advanced scoring algorithm? (yes/no)")
+
+    data_processor = DataProcessor()
 
     while True:
         print(f"\n\nYou have {attempts} attempts remaining. Good luck!")
@@ -42,18 +54,24 @@ def main():
         print()
         print('Guess:\t' + ' '.join([*user_word.upper()]))
         print('Score:\t' + ' '.join(scores))
-        
+
+        attempts -= 1
+
         # Check if User Won
         if did_user_win(scores):
+            game_result = "Won"
             print("\nYou Won!")
             break
         
-        attempts -= 1
-        
         # Check if User Lost
         if attempts == 0:
+            game_result = "Loss"
             print(f"\nYou Lost!\nThe Correct word is: {target_word}")
             break
+
+    data_processor.write_data(user_name, target_word, difficulty_level, initial_attempts - attempts, game_result)
+    data_processor.read_data()
+    print(f"\nYour Average Attempts is {data_processor.get_user_avg_attempts(user_name)}")
 
 
 if __name__ == "__main__":
