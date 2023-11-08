@@ -10,8 +10,8 @@ from utils import (get_word_list,
                    )
 
 # File Paths for the words
-ALL_WORDS = r".\word-bank\all_words.txt"
-TARGET_WORDS = r".\word-bank\target_words.txt"
+ALL_WORDS = "./word-bank/all_words.txt"
+TARGET_WORDS = "./word-bank/target_words.txt"
 
 
 def main():
@@ -23,7 +23,7 @@ def main():
     target_word = random.choice(target_words).lower()
     
     # Welcome Message
-    welcome_msg = "=======   Welcome to Wordle Console App!!!   ======="
+    welcome_msg = "==============   Welcome to Wordle Console App!!!   =============="
     print("#" * len(welcome_msg))
     print(welcome_msg)
     print("#" * len(welcome_msg))
@@ -41,11 +41,8 @@ def main():
         
         user_word = get_user_word(target_word, valid_words, check_all_words=check_all_words)
 
-        if use_adv_scoring:
-            scores = get_score_advanced(user_word, target_word)
-        else:
-            scores = get_score(user_word, target_word)
-        
+        scores = get_score_advanced(user_word, target_word) if use_adv_scoring else get_score(user_word, target_word)
+
         # Print Results
         print()
         print('Guess:\t' + ' '.join([*user_word.upper()]))

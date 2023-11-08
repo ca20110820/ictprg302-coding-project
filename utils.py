@@ -191,11 +191,8 @@ def is_cheat_at_letter(user_word: str, target_word: str, letter: str) -> bool:
     assert len(guess) == len(target), "The length of the User and Target Words must be equal"
     assert len(this_letter) == 1
 
-    if num_letter_in_word(this_letter, guess) > num_letter_in_word(this_letter, target) and (this_letter in guess) \
-            and (this_letter in target):
-        return True
-
-    return False
+    return num_letter_in_word(this_letter, guess) > num_letter_in_word(this_letter, target) and (
+                this_letter in guess) and (this_letter in target)
 
 
 def get_score(user_word: str, target_word: str) -> List[str]:
@@ -265,7 +262,7 @@ def get_score_advanced(user_word: str, target_word: str) -> List[str]:
 
             assert user_letter_count_target > 0, "User letter does not exist in Target Word!!!"
 
-            # Scoring Criterions
+            # Scoring Criteria
             if user_letter_count == 1 and user_letter_count_target == 1:  # Letter exist but in wrong index
                 score_ls[i] = "?"
             elif user_letter_count > 1 and user_letter_count_target == 1:  # The "Cheating" Scenario
