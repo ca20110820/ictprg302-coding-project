@@ -11,10 +11,12 @@ setup(
         ('wordle/data', ['data/game_data.txt']),
     ],
     install_requires=[
+        "pytermgui"
     ],
     entry_points={
         "console_scripts": [
             "wordle = wordle.main:main",
+            "wordle_ptg = wordle_ptg.main:main"
         ],
     },
     python_requires=">=3.10"
