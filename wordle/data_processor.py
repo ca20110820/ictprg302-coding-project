@@ -1,9 +1,11 @@
-from typing import List, Dict, Tuple
+from typing import List, Dict
 import random
+
+import pkg_resources
 
 
 class DataProcessor:
-    def __init__(self, file_path: str = r"./game_data.txt"):
+    def __init__(self, file_path: str = pkg_resources.resource_filename('wordle', 'data/game_data.txt')):
         self.file_path = file_path
         self.data = None
 
@@ -47,19 +49,3 @@ class DataProcessor:
             out_dict[user] = self.get_user_avg_attempts(user)
 
         return dict(sorted(out_dict.items(), key=lambda item: item[1]))
-
-
-if __name__ == "__main__":
-    dp = DataProcessor()
-    dp.write_data("Cedric", "aaaaa", "Easy", random.randint(1, 10), "Won")
-    dp.write_data("Cedric", "bbbbb", "Easy", 10, "Loss")
-    dp.write_data("Anna", "asdde", "Normal", random.randint(1, 10), "Loss")
-    dp.write_data("Zella", "dsedf", "Normal", random.randint(1, 10), "Won")
-
-    dp.read_data()
-    print(dp.data)
-    print(dp.get_users())
-    print()
-    print(dp.get_users_avg_attempts())
-    for k, v in dp.get_users_avg_attempts().items():
-        print(k, v)

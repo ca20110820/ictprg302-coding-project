@@ -1,21 +1,23 @@
 import random
 
-from utils import *
-from data_processor import DataProcessor
+from wordle.utils import *
+from wordle.data_processor import DataProcessor
+
+import pkg_resources
+
 
 # File Paths for the words
-ALL_WORDS = "./word-bank/all_words.txt"
-TARGET_WORDS = "./word-bank/target_words.txt"
+ALL_WORDS = pkg_resources.resource_filename('wordle', 'word-bank/all_words.txt')
+TARGET_WORDS = pkg_resources.resource_filename('wordle', 'word-bank/target_words.txt')
 
 
-def main():
-    
+def run_wordle():
     target_words = get_word_list(TARGET_WORDS)
     valid_words = get_word_list(ALL_WORDS)
-    
+
     # Generate Random Target Word and Transform/Standardize to Lower Case
     target_word = random.choice(target_words).lower()
-    
+
     # Welcome Message
     welcome_msg = "==============   Welcome to Wordle Console App!!!   =============="
     print("#" * len(welcome_msg))
@@ -45,7 +47,7 @@ def main():
 
     while True:
         print(f"\n\nYou have {attempts} attempts remaining. Good luck!")
-        
+
         user_word = get_user_word(target_word, valid_words, check_all_words=check_all_words)
 
         scores = get_score_advanced(user_word, target_word) if use_adv_scoring else get_score(user_word, target_word)
@@ -62,7 +64,7 @@ def main():
             game_result = "Won"
             print(f"\nYou Won {user_name}!")
             break
-        
+
         # Check if User Lost
         if attempts == 0:
             game_result = "Loss"
@@ -79,4 +81,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run_wordle()

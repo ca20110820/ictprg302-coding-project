@@ -1,7 +1,8 @@
 import os
 import unittest
 
-from data_processor import DataProcessor
+from wordle import WORDLE_DIR
+from wordle.data_processor import DataProcessor
 
 PLAY_DATA_PATH = "./play_data.txt"
 
