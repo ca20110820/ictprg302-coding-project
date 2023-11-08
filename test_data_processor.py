@@ -36,9 +36,9 @@ class TestDataProcessor(unittest.TestCase):
         self.clear_data()
 
     def test_avg_attempts(self):
-        self.assertEqual(self.data_processor.get_user_avg_attempts("Cedric"), 3.67)
-        self.assertEqual(self.data_processor.get_user_avg_attempts("Anna"), 5.5)
-        self.assertEqual(self.data_processor.get_user_avg_attempts("Julie"), 4.5)
+        self.assertAlmostEqual(self.data_processor.get_user_avg_attempts("Cedric"), 3.67)
+        self.assertAlmostEqual(self.data_processor.get_user_avg_attempts("Anna"), 5.5)
+        self.assertAlmostEqual(self.data_processor.get_user_avg_attempts("Julie"), 4.5)
 
         self.clear_data()
 
