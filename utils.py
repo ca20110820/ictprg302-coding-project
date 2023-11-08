@@ -11,7 +11,6 @@ def get_word_list(path) -> List[str]:
 
 def get_user_word(target_word: str, valid_words: List[str], check_all_words: bool = False) -> str:
     """ Prompts User for Valid Guess Word and Returns that Word """
-    
     # Prompt the user for their guess word and check if valid
     target_word_len = len(target_word)
     print(f"What is your {target_word_len}-letter guess? (Cheat: {target_word})")
@@ -89,8 +88,15 @@ def get_difficulty_level() -> int:
 
 
 def count_letters(word: str) -> Dict[str, int]:
-    """ Returns a Dictionary of the Letter/Character Counts in the given Word """
-    
+    """ Returns a Dictionary of the Letter/Character Counts in the given Word
+
+    >>> count_letters("cedric")
+    {'c': 2, 'e': 1, 'd': 1, 'r': 1, 'i': 1}
+
+    >>> count_letters("aaaaa")
+    {'a': 5}
+    """
+
     out_dict = {}
 
     for letter in word:
@@ -98,24 +104,57 @@ def count_letters(word: str) -> Dict[str, int]:
             out_dict[letter] = 1
         else:
             out_dict[letter] += 1
-            
+
     return out_dict
 
 
 def num_letter_in_word(letter: str, word: str) -> int:
-    """ Returns the number of occurences of a letter in a given word """
+    """Returns the number of occurences of a letter in a given word
+
+    >>> num_letter_in_word('c', 'cedric')
+    2
+
+    >>> num_letter_in_word('a', 'aaaaa')
+    5
+
+    >>> num_letter_in_word('b', 'cedric')
+    0
+    """
     assert len(letter) == 1, "letter must be a string with length 1"
     return count_letters(word).get(letter, 0)
 
 
 def num_hits(guess: str, target: str) -> int:
-    """ Returns the Number of Hits """
+    """Returns the Number of Hits
+
+    >>> num_hits('hello', 'world')
+    1
+
+    >>> num_hits('LLOIL', 'LLLLP')
+    2
+
+    >>> num_hits('TGULLL', 'LLLRFO')
+    0
+    """
     assert len(guess) == len(target), "Length of Target and Guess Strings must be Equal"
     return len([tup for tup in zip(guess, target) if tup[0] == tup[1]])
 
 
 def num_bullets(letter: str, guess: str, target: str) -> int:
-    """ Returns the (initial static) number of Bullets """
+    """Returns the (initial static) number of Bullets
+
+    >>> num_bullets('C', 'ECCCC', 'CRANK')
+    1
+
+    >>> num_bullets('L', 'LLLLUL', 'LELILL')
+    1
+
+    >>> num_bullets('L', 'TGULLL', 'LLLRFO')
+    0
+
+    >>> num_bullets('L', 'CRANK', 'ECCCC')
+    0
+    """
 
     n_letter_guess = num_letter_in_word(letter, guess)
     n_letter_target = num_letter_in_word(letter, target)
@@ -127,6 +166,24 @@ def num_bullets(letter: str, guess: str, target: str) -> int:
 
 
 def is_cheat_at_letter(user_word: str, target_word: str, letter: str) -> bool:
+    """
+
+    >>> is_cheat_at_letter('cedric', 'abcdef', 'c')
+    True
+
+    >>> is_cheat_at_letter('cedric', 'abccef', 'c')
+    False
+
+    >>> is_cheat_at_letter('cedric', 'abcccf', 'c')
+    False
+
+    >>> is_cheat_at_letter('aaaaa', 'aabbb', 'a')
+    True
+
+    >>> is_cheat_at_letter('aaaab', 'aabbb', 'b')
+    False
+    """
+
     guess = user_word.lower().strip()
     target = target_word.lower().strip()
     this_letter = letter.lower().strip()
@@ -143,17 +200,16 @@ def is_cheat_at_letter(user_word: str, target_word: str, letter: str) -> bool:
 
 def get_score(user_word: str, target_word: str) -> List[str]:
     """ Returns the List of Scores """
-    
     # Standardized to Lower Case
     user_word = user_word.lower()
     target_word = target_word.lower()
 
     word_len = len(target_word)  # Length of Target/User Word. Don't want to recalculate.
-    
+
     assert len(user_word) == word_len, "The length of the User and Target Words must be equal"
-    
+
     score_ls = []  # Initialize Scores
-    
+
     for i in range(word_len):
         if user_word[i] == target_word[i]:
             score_ls += ["+"]
@@ -161,12 +217,11 @@ def get_score(user_word: str, target_word: str) -> List[str]:
             score_ls += ["?"]
         else:
             score_ls += ["-"]
-    
+
     return score_ls
 
 
 def get_score_advanced(user_word: str, target_word: str) -> List[str]:
-
     # Standardized to Lower Case
     user_word = user_word.lower()
     target_word = target_word.lower()
@@ -222,7 +277,7 @@ def get_score_advanced(user_word: str, target_word: str) -> List[str]:
                     score_ls[i] = "-"
             elif user_letter_count == 1 and user_letter_count_target > 1:
                 score_ls[i] = "?"
-            else:   # user_letter_count > 1 and user_letter_count_target > 1
+            else:  # user_letter_count > 1 and user_letter_count_target > 1
                 if user_letter_count > user_letter_count_target:  # The "Cheating" Scenario
                     # Check how many bullets left
                     if num_bullets_dict[user_letter] > 0:  # There's still some "bullets"
@@ -238,7 +293,20 @@ def get_score_advanced(user_word: str, target_word: str) -> List[str]:
 
 
 def did_user_win(score_ls) -> bool:
-    """ Returns True of the User Correctly Guessed the Target Word, Otherwise False """
+    """ Returns True of the User Correctly Guessed the Target Word, Otherwise False
+
+    >>> did_user_win(['+', '+', '+'])
+    True
+
+    >>> did_user_win(['-', '-', '-'])
+    False
+
+    >>> did_user_win(['?', '?', '?'])
+    False
+
+    >>> did_user_win(['+', '-', '?'])
+    False
+    """
     return all([(True if score == "+" else False) for score in score_ls])
 
 
@@ -251,3 +319,8 @@ __all__ = ["get_word_list",
            "is_cheat_at_letter",
            "get_difficulty_level"
            ]
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
