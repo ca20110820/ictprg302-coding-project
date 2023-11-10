@@ -12,6 +12,9 @@ setup(
     install_requires=[
         "pytermgui"
     ],
+    setup_requires=[
+        'setuptools'
+    ],
     entry_points={
         "console_scripts": [
             "wordle = wordle.main:main",
