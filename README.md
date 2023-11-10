@@ -8,4 +8,4 @@
 7. Run `python wordle`
 
 If you are using Python 3.11+, you may get `ModuleNotFoundError` for `pkg_resources`. To fix this issue,
-try `pip install setuptools`.
+try `python ensure_setuptools.py`.
