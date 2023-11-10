@@ -7,8 +7,7 @@ setup(
     author="Cedric Anover",
     packages=find_packages(),
     data_files=[
-        ('wordle/word-bank', ['word-bank/all_words.txt', 'word-bank/target_words.txt']),
-        ('wordle/data', ['data/game_data.txt']),
+        ('wordle/word-bank', ['word-bank/all_words.txt', 'word-bank/target_words.txt'])
     ],
     install_requires=[
         "pytermgui"

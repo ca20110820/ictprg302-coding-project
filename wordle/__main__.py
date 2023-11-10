@@ -1,5 +1,6 @@
 import random
 
+from wordle import WORDLE_DIR
 from wordle.utils import *
 from wordle.data_processor import DataProcessor
 
@@ -43,7 +44,7 @@ def run_wordle():
     # Prompt user if they want to use the advanced scoring algorithm
     use_adv_scoring = get_user_bool("yes", "no", "Do you want to use the advanced scoring algorithm? (yes/no)")
 
-    data_processor = DataProcessor()
+    data_processor = DataProcessor(WORDLE_DIR / 'data' / 'game_data.txt')
 
     while True:
         print(f"\n\nYou have {attempts} attempts remaining. Good luck!")

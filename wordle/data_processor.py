@@ -1,12 +1,16 @@
+import os
 from typing import List, Dict
-import random
-
-import pkg_resources
 
 
 class DataProcessor:
-    def __init__(self, file_path: str = pkg_resources.resource_filename('wordle', 'data/game_data.txt')):
+    def __init__(self, file_path: str):
         self.file_path = file_path
+
+        # Create Parent Directory if not exists
+        dir_name = os.path.dirname(self.file_path)
+        if not os.path.exists(dir_name):
+            os.makedirs(dir_name)
+
         self.data = None
 
     def write_data(self, user_name, target_word, difficulty_level, num_attempts, game_result) -> None:
@@ -22,7 +26,7 @@ class DataProcessor:
             for line in file:
                 line = line.strip()
                 line = line.split(',')
-                self._parse_data(line)
+                self._clean_data(line)
                 out_list.append(line)
 
         self.data = out_list  # Naive Caching
@@ -30,7 +34,7 @@ class DataProcessor:
         return out_list
 
     @staticmethod
-    def _parse_data(inp_list: list) -> None:
+    def _clean_data(inp_list: list) -> None:
         inp_list[3] = int(inp_list[3])
 
     def get_users(self) -> List[str]:

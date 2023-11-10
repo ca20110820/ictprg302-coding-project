@@ -4,7 +4,7 @@ import unittest
 from wordle import WORDLE_DIR
 from wordle.data_processor import DataProcessor
 
-PLAY_DATA_PATH = "./play_data.txt"
+PLAY_DATA_PATH = os.path.join(os.path.dirname(__file__), 'play_data.txt')
 
 
 class TestDataProcessor(unittest.TestCase):
@@ -56,5 +56,3 @@ class TestDataProcessor(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-
