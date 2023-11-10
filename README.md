@@ -4,4 +4,5 @@
 3. `cd ictprg302-coding-project/`
 4. `python -m venv venv`
 5. Activate `venv`
-6. Run `python wordle`
+6. `pip install -e .`
+7. Run `python wordle`
