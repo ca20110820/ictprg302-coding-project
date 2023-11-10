@@ -1,4 +1,5 @@
 from typing import List, Dict
+import random
 
 
 def get_word_list(path) -> List[str]:
@@ -22,11 +23,18 @@ def get_user_name() -> str:
             return user_name.strip()
 
 
+def generate_jumbled_hint(word: str) -> str:
+    """Generate a Hint for the Target Word by Shuffling the Characters"""
+    char_list = list(word)
+    random.shuffle(char_list)
+    return ''.join(char_list)
+
+
 def get_user_word(target_word: str, valid_words: List[str], check_all_words: bool = False) -> str:
     """ Prompts User for Valid Guess Word and Returns that Word """
     # Prompt the user for their guess word and check if valid
     target_word_len = len(target_word)
-    print(f"What is your {target_word_len}-letter guess? (Cheat: {target_word})")
+    print(f"What is your {target_word_len}-letter guess? [Hint (Shuffle): {generate_jumbled_hint(target_word)}]")
     while True:
         try:
             user_word = input(">>> ")  # User's Guess
